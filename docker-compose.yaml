@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  kafka:
+    image: wurstmeister/kafka
+    hostname: kafka
+    ports:
+      - "9092:9092"
+    links:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: "127.0.0.1"
+      KAFKA_ADVERTISED_PORT: "9092"
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_CREATE_TOPICS: |
+        test-topic:1:1,
+        transfer_request_topic:1:1,
+        check_result_topic:1:1,
+        check_status_topic:1:1
+      KAFKA_BROKER: "localhost:9092"
+    depends_on:
+      - zookeeper
+    container_name: tgbot-kafka
+  zookeeper:
+      image: wurstmeister/zookeeper
+      ports:
+        - "2181:2181"
+      container_name: tgbot-zookeeper

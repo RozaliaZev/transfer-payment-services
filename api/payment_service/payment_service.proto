@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package payment_service;
+
+option go_package = "services/api/payment_service";
+
+import "google/protobuf/any.proto"; // для передачи данных через Apache Kafka
+
+service PaymentService {
+  rpc CheckIdRepeatition (PaymentTransferRequest) returns (PaymentTransferResponse) {}
+  rpc RegistrationApplication (PaymentTransferRequest) returns (PaymentTransferResponse) {}
+}
+
+message PaymentTransferRequest {
+  string senderId = 1;
+  string requestId = 2;
+  double amount = 3;
+  google.protobuf.Any additionalData = 4;
+}
+
+message PaymentTransferResponse {
+  bool success = 1;
+  string errorMessage = 2;
+  google.protobuf.Any additionalData = 3;
+}

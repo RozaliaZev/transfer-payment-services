@@ -1,0 +1,33 @@
+swagger: "2.0"
+info:
+  title: Transfer Payment API
+  description: API for transferring payments
+  version: "1.0"
+
+paths:
+  /transaction:
+    post:
+      summary: Transfer payment request
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: requestBody
+          description: Transfer payment request body
+          schema:
+            type: object
+            properties:
+              senderId:
+                type: string
+                description: ID of the sender
+              requestId:
+                type: string
+                description: ID of the request
+              amount:
+                type: number
+                description: Amount to transfer
+      responses:
+        200:
+          description: Successful operation
+        500:
+          description: Internal server error
